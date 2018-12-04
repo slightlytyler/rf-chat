@@ -30,7 +30,7 @@ I used React / Emotion / Webpack to build my version. I tried to keep it very si
 
 I placed all the component in a single directory for simplicty. In my current production apps, they usually get broken up into `common`, `features`, and `scenes`. Even this small app resulted in about 30 different named components. Scaling the project additionally might require a more nuanced folder structure.
 
-State is managed in-place by components. This makes for quick development but not great for cacheing, batching, de-duping, etc. If those features were key we could modify `Query` and `Mutation` to use methods provided by a `Cache` component or something similar that would hold all remote state, handle requests, and propogate updates via context.
+State is managed in-place by components. This makes for quick development but not great for cacheing, batching, de-duping, etc. If those features were key we could modify `Query` and `Mutation` to use methods provided by a `Cache` component or something similar that would hold all remote state, handle requests, and propogate updates via context. However, my implementation does include client side cache updates on mutations so it minimizes round trips to some degree.
 
 Routing is handled via React Router, I didn't bother writing my own routing implementation lol.
 

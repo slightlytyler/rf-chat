@@ -49,7 +49,7 @@ const Title = styled("div")`
 
 const RoomDetailsScene = props => (
   <Query endpoint={`/rooms/${props.match.params.roomId}`}>
-    {({ data: room, isLoading: isLoadingRoom }) => (
+    {({ data: room, isLoading: isLoadingRoom, update: updateRoom }) => (
       <WaitFor
         condition={isLoadingRoom}
         render={() => (
@@ -86,11 +86,24 @@ const RoomDetailsScene = props => (
                               {({ mutate }) => (
                                 <MessageCreator
                                   handleSubmit={values => {
-                                    const optimisticUpdate = newMessage =>
+                                    const optimisticUpdate = newMessage => {
                                       updateMessages(prevMessages => [
                                         ...prevMessages,
                                         newMessage
                                       ]);
+                                      if (
+                                        room.users.indexOf(session.viewer) ===
+                                        -1
+                                      ) {
+                                        updateRoom(prevRoom => ({
+                                          ...prevRoom,
+                                          users: [
+                                            ...prevRoom.users,
+                                            session.viewer
+                                          ]
+                                        }));
+                                      }
+                                    };
                                     return mutate({
                                       message: values.message,
                                       name: session.viewer
