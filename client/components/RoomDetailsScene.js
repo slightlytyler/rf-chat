@@ -6,6 +6,7 @@ import AuthHandler from "./AuthHandler";
 import MessageCreator from "./MessageCreator";
 import MessageList from "./MessageList";
 import RoomMemberList from "./RoomMemberList";
+import ScrollHandler from "./ScrollHandler";
 import WaitFor from "./WaitFor";
 
 const Wrapper = styled("div")`
@@ -26,9 +27,8 @@ const Header = styled("div")`
   background-color: ${props => props.theme.color.white};
 `;
 
-const Body = styled("div")`
+const Body = styled(ScrollHandler.View)`
   flex: 1 1 auto;
-  overflow: scroll;
   padding: ${props => props.theme.spacing.md};
   box-shadow: inset 0px 11px 8px -10px rgba(0, 0, 0, 0.2),
     inset 0px -8px 5px -8px rgba(0, 0, 0, 0.2);
@@ -63,7 +63,9 @@ const RoomDetailsScene = props => (
                 isLoading: isLoadingMessages,
                 update: updateMessages
               }) => (
-                <React.Fragment>
+                // This is hacky. We'll have to improve this API with
+                // "scroll to message" functionality to make it :ok_hand:
+                <ScrollHandler initialPosition={100000}>
                   <Body>
                     <WaitFor
                       condition={isLoadingMessages}
@@ -73,31 +75,37 @@ const RoomDetailsScene = props => (
                   <Footer>
                     <AuthHandler.Consumer>
                       {({ session }) => (
-                        <Mutation
-                          endpoint={`/rooms/${
-                            props.match.params.roomId
-                          }/messages`}
-                        >
-                          {({ mutate }) => (
-                            <MessageCreator
-                              handleSubmit={values => {
-                                const optimisticUpdate = newMessage =>
-                                  updateMessages(prevMessages => [
-                                    ...prevMessages,
-                                    newMessage
-                                  ]);
-                                return mutate({
-                                  message: values.message,
-                                  name: session.viewer.name
-                                }).then(effect(optimisticUpdate));
-                              }}
-                            />
+                        <ScrollHandler.Consumer>
+                          {({ scrollBottom }) => (
+                            <Mutation
+                              endpoint={`/rooms/${
+                                props.match.params.roomId
+                              }/messages`}
+                            >
+                              {({ mutate }) => (
+                                <MessageCreator
+                                  handleSubmit={values => {
+                                    const optimisticUpdate = newMessage =>
+                                      updateMessages(prevMessages => [
+                                        ...prevMessages,
+                                        newMessage
+                                      ]);
+                                    return mutate({
+                                      message: values.message,
+                                      name: session.viewer.name
+                                    })
+                                      .then(effect(optimisticUpdate))
+                                      .then(effect(scrollBottom));
+                                  }}
+                                />
+                              )}
+                            </Mutation>
                           )}
-                        </Mutation>
+                        </ScrollHandler.Consumer>
                       )}
                     </AuthHandler.Consumer>
                   </Footer>
-                </React.Fragment>
+                </ScrollHandler>
               )}
             </Query>
           </Wrapper>
