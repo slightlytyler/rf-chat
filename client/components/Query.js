@@ -20,13 +20,24 @@ class Query extends React.Component {
   };
 
   componentDidMount() {
+    this.makeRequest();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.endpoint !== prevProps.endpoint) {
+      this.setState({ isLoading: true });
+      this.makeRequest();
+    }
+  }
+
+  makeRequest = () => {
     axios
       .get(buildUrl(this.props.endpoint))
       .then(res => this.setState({ data: res.data, isLoading: false }))
       .catch(res =>
         this.setState({ errors: extractErrors(res), isLoading: false })
       );
-  }
+  };
 
   render() {
     return this.props.children(this.state);

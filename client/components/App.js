@@ -1,4 +1,3 @@
-import { kebabCase } from "lodash/fp";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import AuthenticatedRoute from "./AuthenticatedRoute";
@@ -42,9 +41,7 @@ const App = () => (
                                   path="/r/:roomId"
                                   component={RoomViewer}
                                 />
-                                <Redirect
-                                  to={`/r/${kebabCase(data[0].name)}`}
-                                />
+                                <Redirect to={`/r/${data[0].id}`} />
                               </Switch>
                             )}
                           />

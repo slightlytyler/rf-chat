@@ -1,4 +1,3 @@
-import { kebabCase } from "lodash/fp";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import List from "./List";
@@ -11,14 +10,14 @@ const RoomList = props => (
     <List
       data={props.rooms}
       renderItem={r => {
-        const roomPath = `/r/${kebabCase(r.name)}`;
+        const roomPath = `/r/${r.id}`;
         return (
           <Item
             isActive={match => {
               if (!match) return false;
               return match.url === roomPath;
             }}
-            key={r.name}
+            key={r.id}
             to={roomPath}
           >
             {r.name}

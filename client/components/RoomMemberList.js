@@ -19,8 +19,8 @@ const RoomMemberList = props => (
     <List
       data={props.members}
       renderItem={(m, i) => (
-        <React.Fragment key={m.name}>
-          <Item>{m.name}</Item>
+        <React.Fragment key={m}>
+          <Item>{m}</Item>
           <Branch
             condition={i !== props.members.length - 1}
             renderLeft={() => <span>{","}&nbsp;</span>}

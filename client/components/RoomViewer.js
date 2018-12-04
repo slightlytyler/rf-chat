@@ -2,7 +2,28 @@ import styled from "@emotion/styled";
 import React from "react";
 import MessageCreator from "./MessageCreator";
 import MessageList from "./MessageList";
+import Query from "./Query";
 import RoomMemberList from "./RoomMemberList";
+import WaitFor from "./WaitFor";
+
+const MESSAGES = [
+  {
+    sender: { name: "Cathleen" },
+    text: "Hey whats up"
+  },
+  {
+    sender: { name: "Grover" },
+    text: "First part"
+  },
+  {
+    sender: { name: "Grover" },
+    text: "Second part"
+  },
+  {
+    sender: { name: "Tyler" },
+    text: "This is my own message"
+  }
+];
 
 const Wrapper = styled("div")`
   display: flex;
@@ -37,48 +58,28 @@ const Title = styled("div")`
   font-size: 1.75rem;
 `;
 
-const MEMBERS = [
-  { name: "Ryan Gonzales" },
-  { name: "Cathleen" },
-  { name: "Grover" },
-  { name: "Abdul" },
-  { name: "Dude" }
-];
-
-const MESSAGES = [
-  {
-    sender: { name: "Cathleen" },
-    text: "Hey whats up"
-  },
-  {
-    sender: { name: "Grover" },
-    text: "First part"
-  },
-  {
-    sender: { name: "Grover" },
-    text: "Second part"
-  },
-  {
-    sender: { name: "Tyler" },
-    text: "This is my own message"
-  }
-];
-
-const ROOM = { name: "Analytics" };
-
 const RoomViewer = props => (
-  <Wrapper>
-    <Header>
-      <Title>{ROOM.name}</Title>
-      <RoomMemberList members={MEMBERS} />
-    </Header>
-    <Body>
-      <MessageList messages={MESSAGES} />
-    </Body>
-    <Footer>
-      <MessageCreator />
-    </Footer>
-  </Wrapper>
+  <Query endpoint={`/rooms/${props.match.params.roomId}`}>
+    {({ data, isLoading }) => (
+      <WaitFor
+        condition={isLoading}
+        render={() => (
+          <Wrapper>
+            <Header>
+              <Title>{data.name}</Title>
+              <RoomMemberList members={data.users} />
+            </Header>
+            <Body>
+              <MessageList messages={MESSAGES} />
+            </Body>
+            <Footer>
+              <MessageCreator />
+            </Footer>
+          </Wrapper>
+        )}
+      />
+    )}
+  </Query>
 );
 
 export default RoomViewer;
