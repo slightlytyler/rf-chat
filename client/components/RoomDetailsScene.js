@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Route } from "react-router-dom";
-import { Query } from "./Api";
+import effect from "../utils/effect";
+import { Mutation, Query } from "./Api";
+import AuthHandler from "./AuthHandler";
 import MessageCreator from "./MessageCreator";
 import MessageList from "./MessageList";
 import RoomMemberList from "./RoomMemberList";
@@ -45,7 +46,7 @@ const Title = styled("div")`
   font-size: 1.75rem;
 `;
 
-const RoomViewer = props => (
+const RoomDetailsScene = props => (
   <Query endpoint={`/rooms/${props.match.params.roomId}`}>
     {({ data: room, isLoading: isLoadingRoom }) => (
       <WaitFor
@@ -70,15 +71,31 @@ const RoomViewer = props => (
                     />
                   </Body>
                   <Footer>
-                    <Route
-                      path={props.match.path}
-                      render={routeProps => (
-                        <MessageCreator
-                          {...routeProps}
-                          updateMessages={updateMessages}
-                        />
+                    <AuthHandler.Consumer>
+                      {({ session }) => (
+                        <Mutation
+                          endpoint={`/rooms/${
+                            props.match.params.roomId
+                          }/messages`}
+                        >
+                          {({ mutate }) => (
+                            <MessageCreator
+                              handleSubmit={values => {
+                                const optimisticUpdate = newMessage =>
+                                  updateMessages(prevMessages => [
+                                    ...prevMessages,
+                                    newMessage
+                                  ]);
+                                return mutate({
+                                  message: values.message,
+                                  name: session.viewer.name
+                                }).then(effect(optimisticUpdate));
+                              }}
+                            />
+                          )}
+                        </Mutation>
                       )}
-                    />
+                    </AuthHandler.Consumer>
                   </Footer>
                 </React.Fragment>
               )}
@@ -90,4 +107,4 @@ const RoomViewer = props => (
   </Query>
 );
 
-export default RoomViewer;
+export default RoomDetailsScene;

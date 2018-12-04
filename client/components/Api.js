@@ -1,6 +1,7 @@
 import axios from "axios";
 import { trimChars } from "lodash/fp";
 import React from "react";
+import effect from "../utils/effect";
 
 const domain = "http://localhost:8080";
 
@@ -49,9 +50,12 @@ class Query extends React.Component {
     axios
       .get(buildUrl(this.props.endpoint))
       .then(rejectErrorResponses)
-      .then(res => this.setState({ data: res.data, isLoading: false }))
-      .catch(res =>
-        this.setState({ errors: extractErrors(res), isLoading: false })
+      .then(res => res.data)
+      .then(effect(data => this.setState({ data, isLoading: false })))
+      .catch(
+        effect(err =>
+          this.setState({ errors: extractErrors(err), isLoading: false })
+        )
       );
   };
 

@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Mutation } from "./Api";
-import AuthHandler from "./AuthHandler";
+import effect from "../utils/effect";
 import Form from "./Form";
 import TextInput from "./TextInput";
 
@@ -25,36 +24,20 @@ const SubmitButton = styled(GhostButton)`
 `;
 
 const MessageCreator = props => (
-  <AuthHandler.Consumer>
-    {({ session }) => (
-      <Mutation endpoint={`/rooms/${props.match.params.roomId}/messages`}>
-        {({ mutate }) => (
-          <HorizontalForm
-            onSubmit={(values, { setValues }) =>
-              mutate({
-                message: values.message,
-                name: session.viewer.name
-              }).then(newMessage => {
-                props.updateMessages(prevMessages => [
-                  ...prevMessages,
-                  newMessage
-                ]);
-                setValues({ message: "" });
-              })
-            }
-          >
-            <Form.Errors />
-            <Form.Field
-              name="message"
-              component={FluidTextInput}
-              placeholder="Type a message..."
-            />
-            <SubmitButton>Send</SubmitButton>
-          </HorizontalForm>
-        )}
-      </Mutation>
-    )}
-  </AuthHandler.Consumer>
+  <HorizontalForm
+    onSubmit={(values, { setValues }) => {
+      const resetValues = () => setValues({ message: "" });
+      return props.handleSubmit(values).then(effect(resetValues));
+    }}
+  >
+    <Form.Errors />
+    <Form.Field
+      name="message"
+      component={FluidTextInput}
+      placeholder="Type a message..."
+    />
+    <SubmitButton>Send</SubmitButton>
+  </HorizontalForm>
 );
 
 export default MessageCreator;

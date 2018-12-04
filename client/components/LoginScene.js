@@ -10,7 +10,7 @@ const Wrapper = styled(Page)`
   align-items: center;
 `;
 
-const Login = () => (
+const LoginScene = () => (
   <Wrapper>
     <AuthHandler.Consumer>
       {({ actions }) => (
@@ -26,4 +26,4 @@ const Login = () => (
   </Wrapper>
 );
 
-export default Login;
+export default LoginScene;
