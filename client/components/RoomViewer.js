@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import React from "react";
+import { Route } from "react-router-dom";
+import { Query } from "./Api";
 import MessageCreator from "./MessageCreator";
 import MessageList from "./MessageList";
-import Query from "./Query";
 import RoomMemberList from "./RoomMemberList";
 import WaitFor from "./WaitFor";
 
@@ -50,19 +51,33 @@ const RoomViewer = props => (
               <Title>{room.name}</Title>
               <RoomMemberList members={room.users} />
             </Header>
-            <Body>
-              <Query endpoint={`/rooms/${props.match.params.roomId}/messages`}>
-                {({ data: messages, isLoading: isLoadingMessages }) => (
-                  <WaitFor
-                    condition={isLoadingMessages}
-                    render={() => <MessageList messages={messages} />}
-                  />
-                )}
-              </Query>
-            </Body>
-            <Footer>
-              <MessageCreator />
-            </Footer>
+            <Query endpoint={`/rooms/${props.match.params.roomId}/messages`}>
+              {({
+                data: messages,
+                isLoading: isLoadingMessages,
+                update: updateMessages
+              }) => (
+                <React.Fragment>
+                  <Body>
+                    <WaitFor
+                      condition={isLoadingMessages}
+                      render={() => <MessageList messages={messages} />}
+                    />
+                  </Body>
+                  <Footer>
+                    <Route
+                      path={props.match.path}
+                      render={routeProps => (
+                        <MessageCreator
+                          {...routeProps}
+                          updateMessages={updateMessages}
+                        />
+                      )}
+                    />
+                  </Footer>
+                </React.Fragment>
+              )}
+            </Query>
           </Wrapper>
         )}
       />

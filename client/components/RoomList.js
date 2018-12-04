@@ -9,21 +9,11 @@ const RoomList = props => (
   <Menu>
     <List
       data={props.rooms}
-      renderItem={r => {
-        const roomPath = `/r/${r.id}`;
-        return (
-          <Item
-            isActive={match => {
-              if (!match) return false;
-              return match.url === roomPath;
-            }}
-            key={r.id}
-            to={roomPath}
-          >
-            {r.name}
-          </Item>
-        );
-      }}
+      renderItem={r => (
+        <Item key={r.id} to={`/r/${r.id}`}>
+          {r.name}
+        </Item>
+      )}
     />
   </Menu>
 );

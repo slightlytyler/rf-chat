@@ -1,12 +1,12 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { Query } from "./Api";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import AuthHandler from "./AuthHandler";
 import Avatar from "./Avatar";
 import Container from "./Container";
 import Layout from "./Layout";
 import Login from "./Login";
-import Query from "./Query";
 import RoomList from "./RoomList";
 import RoomViewer from "./RoomViewer";
 import WaitFor from "./WaitFor";
