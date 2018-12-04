@@ -1,12 +1,15 @@
 {
   "name": "frontend-project",
+  "author": "Tyler Martinez <slightlytyler@gmail.com>",
   "version": "1.0.0",
   "description": "The Frontend take home project for DoorDash",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "serve ./public",
-    "api-server": "node server.js"
+    "build": "NODE_ENV=production webpack",
+    "dev": "webpack-dev-server",
+    "fmt": "prettier --write \"**/*.{js,json}\"",
+    "test": "jest",
+    "api-server": "node server/main.js"
   },
   "engines": {
     "node": ">=7.0.0"
@@ -14,11 +17,31 @@
   "author": "Ryan Gonzalez",
   "license": "ISC",
   "devDependencies": {
-    "serve": "^3.1.0",
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "body-parser": "~1.0.1",
     "express": "~4.0.0",
-    "body-parser": "~1.0.1"
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^23.6.0",
+    "jest-dom": "^2.1.1",
+    "prettier": "^1.15.2",
+    "react-testing-library": "^5.2.3",
+    "serve": "^3.1.0",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.0-beta.13",
+    "@emotion/styled": "^10.0.0-beta.13",
+    "axios": "^0.18.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "shortid": "^2.2.8"
   }
 }
