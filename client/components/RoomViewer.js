@@ -14,9 +14,11 @@ const Wrapper = styled("div")`
 `;
 
 const Header = styled("div")`
+  z-index: 10;
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
-  flex-direction: center;
+  justify-content: center;
   align-items: center;
   padding: ${props => props.theme.spacing.md};
   color: ${props => props.theme.color.darkGray};
@@ -24,13 +26,16 @@ const Header = styled("div")`
 `;
 
 const Body = styled("div")`
-  flex: 1 0 auto;
+  flex: 1 1 auto;
+  overflow: scroll;
   padding: ${props => props.theme.spacing.md};
   box-shadow: inset 0px 11px 8px -10px rgba(0, 0, 0, 0.2),
     inset 0px -8px 5px -8px rgba(0, 0, 0, 0.2);
 `;
 
 const Footer = styled("div")`
+  z-index: 10;
+  flex-shrink: 0;
   padding: ${props => props.theme.spacing.md};
   background-color: ${props => props.theme.color.white};
 `;

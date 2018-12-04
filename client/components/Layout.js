@@ -6,13 +6,14 @@ const Layout = styled(Page)`
 `;
 
 const Sidebar = styled("div")`
+  flex-shrink: 0;
   width: 20rem;
   height: 100%;
   background-color: ${props => props.theme.color.pink};
 `;
 
 const Content = styled("div")`
-  flex: 1 0 auto;
+  flex: 1 1 auto;
   height: 100%;
   background-color: ${props => props.theme.color.lightGray};
 `;

@@ -30,7 +30,7 @@ const MessageCreator = props => (
       <Mutation endpoint={`/rooms/${props.match.params.roomId}/messages`}>
         {({ mutate }) => (
           <HorizontalForm
-            onSubmit={values =>
+            onSubmit={(values, { setValues }) =>
               mutate({
                 message: values.message,
                 name: session.viewer.name
@@ -39,6 +39,7 @@ const MessageCreator = props => (
                   ...prevMessages,
                   newMessage
                 ]);
+                setValues({ message: "" });
               })
             }
           >

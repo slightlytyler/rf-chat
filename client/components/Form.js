@@ -46,11 +46,20 @@ class Form extends React.Component {
     };
   }
 
-  setErrors = errors => this.setState({ errors });
+  setErrors = errors =>
+    this.setState(state => ({
+      errors: Object.assign({}, state.errors, errors)
+    }));
 
-  setSubmitting = isSubmitting => this.setSubmitting({ isSubmitting });
+  setSubmitting = isSubmitting =>
+    this.setState(state => ({
+      isSubmitting: Object.assign({}, state.isSubmitting, isSubmitting)
+    }));
 
-  setValues = values => this.setState({ values });
+  setValues = values =>
+    this.setState(state => ({
+      values: Object.assign({}, state.values, values)
+    }));
 
   handleSubmit = e => {
     e.preventDefault();
