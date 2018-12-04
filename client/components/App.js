@@ -7,32 +7,10 @@ import Avatar from "./Avatar";
 import Container from "./Container";
 import Layout from "./Layout";
 import Login from "./Login";
+import Query from "./Query";
 import RoomList from "./RoomList";
 import RoomViewer from "./RoomViewer";
-
-const ROOMS = [
-  {
-    name: "Analytics"
-  },
-  {
-    name: "Business"
-  },
-  {
-    name: "Design"
-  },
-  {
-    name: "Engineering"
-  },
-  {
-    name: "HR"
-  },
-  {
-    name: "Operations"
-  },
-  {
-    name: "Special Ops"
-  }
-];
+import WaitFor from "./WaitFor";
 
 const App = () => (
   <Container>
@@ -44,17 +22,35 @@ const App = () => (
             <AuthenticatedRoute
               render={() => (
                 <Layout>
-                  <Layout.Sidebar>
-                    <Avatar />
-                    <RoomList rooms={ROOMS} />
-                  </Layout.Sidebar>
-                  <Layout.Content>
-                    <Switch>
-                      <Route path="/login" component={Login} />
-                      <Route path="/r/:roomId" component={RoomViewer} />
-                      <Redirect to={`/r/${kebabCase(ROOMS[0].name)}`} />
-                    </Switch>
-                  </Layout.Content>
+                  <Query endpoint="/rooms">
+                    {({ data, isLoading }) => (
+                      <React.Fragment>
+                        <Layout.Sidebar>
+                          <Avatar />
+                          <WaitFor
+                            condition={isLoading}
+                            render={() => <RoomList rooms={data} />}
+                          />
+                        </Layout.Sidebar>
+                        <Layout.Content>
+                          <WaitFor
+                            condition={isLoading}
+                            render={() => (
+                              <Switch>
+                                <Route
+                                  path="/r/:roomId"
+                                  component={RoomViewer}
+                                />
+                                <Redirect
+                                  to={`/r/${kebabCase(data[0].name)}`}
+                                />
+                              </Switch>
+                            )}
+                          />
+                        </Layout.Content>
+                      </React.Fragment>
+                    )}
+                  </Query>
                 </Layout>
               )}
             />
