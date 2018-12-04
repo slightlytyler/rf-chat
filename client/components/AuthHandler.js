@@ -15,11 +15,14 @@ const defaultProps = {
 class AuthHandler extends React.Component {
   constructor(props) {
     super(props);
+    const hydratedSession = JSON.parse(localStorage.getItem("session"));
+    const previousSession =
+      hydratedSession === '"null"' ? null : hydratedSession;
     this.state = {
       actions: {
         login: this.login
       },
-      session: null
+      session: previousSession
     };
   }
 
@@ -28,9 +31,14 @@ class AuthHandler extends React.Component {
     viewer: { name: username }
   });
 
+  setSession = (session, cb) => {
+    localStorage.setItem("session", JSON.stringify(session));
+    this.setState({ session }, cb);
+  };
+
   login = username => {
     const session = this.createSession(username);
-    this.setState({ session }, () => this.props.onAuthChange(session));
+    this.setSession(session, () => this.props.onAuthChange(session));
   };
 
   render() {
