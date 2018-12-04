@@ -86,7 +86,7 @@ const RoomDetailsScene = props => (
                               {({ mutate }) => (
                                 <MessageCreator
                                   handleSubmit={values => {
-                                    const optimisticUpdate = newMessage => {
+                                    const updateCache = newMessage => {
                                       updateMessages(prevMessages => [
                                         ...prevMessages,
                                         newMessage
@@ -108,7 +108,7 @@ const RoomDetailsScene = props => (
                                       message: values.message,
                                       name: session.viewer
                                     })
-                                      .then(effect(optimisticUpdate))
+                                      .then(effect(updateCache))
                                       .then(effect(scrollBottom));
                                   }}
                                 />
