@@ -14,6 +14,7 @@ const Sidebar = styled("div")`
 const Content = styled("div")`
   flex: 1 0 auto;
   height: 100%;
+  background-color: ${props => props.theme.color.lightGray};
 `;
 
 Layout.Sidebar = Sidebar;

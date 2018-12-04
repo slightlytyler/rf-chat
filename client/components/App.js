@@ -29,6 +29,7 @@ const App = () => (
                           <Avatar />
                           <WaitFor
                             condition={isLoading}
+                            invertColors
                             render={() => <RoomList rooms={data} />}
                           />
                         </Layout.Sidebar>

@@ -17,18 +17,19 @@ const Header = styled("div")`
   align-items: center;
   padding: ${props => props.theme.spacing.md};
   color: ${props => props.theme.color.darkGray};
+  background-color: ${props => props.theme.color.white};
 `;
 
 const Body = styled("div")`
   flex: 1 0 auto;
   padding: ${props => props.theme.spacing.md};
-  background-color: ${props => props.theme.color.lightGray};
   box-shadow: inset 0px 11px 8px -10px rgba(0, 0, 0, 0.2),
     inset 0px -8px 5px -8px rgba(0, 0, 0, 0.2);
 `;
 
 const Footer = styled("div")`
   padding: ${props => props.theme.spacing.md};
+  background-color: ${props => props.theme.color.white};
 `;
 
 const Title = styled("div")`
