@@ -25,6 +25,7 @@ const SubmitButton = styled(GhostButton)`
 
 const MessageCreator = props => (
   <HorizontalForm
+    initialValues={{ message: "" }}
     onSubmit={(values, { setValues }) => {
       const resetValues = () => setValues({ message: "" });
       return props.handleSubmit(values).then(effect(resetValues));

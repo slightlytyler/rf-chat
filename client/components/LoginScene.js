@@ -14,7 +14,10 @@ const LoginScene = () => (
   <Wrapper>
     <AuthHandler.Consumer>
       {({ actions }) => (
-        <Form onSubmit={values => actions.login(values.username)}>
+        <Form
+          initialValues={{ username: "" }}
+          onSubmit={values => actions.login(values.username)}
+        >
           <Form.Errors />
           <Form.Field name="username" placeholder="Type your username..." />
           <Form.Actions>

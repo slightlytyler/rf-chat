@@ -1,17 +1,15 @@
 import styled from "@emotion/styled";
-import { fromPairs } from "lodash/fp";
+import { noop, omit } from "lodash/fp";
 import React from "react";
 import Button from "./Button";
-import FormField from "./FormField";
+import TextInput from "./TextInput";
 
-const extractFormData = formHtmlEl => {
-  const formData = new FormData(formHtmlEl);
-  let data = {};
-  for (const [k, v] of formData.entries()) {
-    data[k] = v;
-  }
-  return data;
-};
+const Context = React.createContext({
+  errors: null,
+  handleChange: noop,
+  isSubmitting: false,
+  values: {}
+});
 
 const Wrapper = styled("form")`
   display: flex;
@@ -26,20 +24,34 @@ const Actions = styled("div")`
 
 const SubmitButton = props => <Button type="submit" {...props} />;
 
-const defaultProps = {
-  mapPropsToValues: () => null
+const FormField = props => {
+  const Input = props.component || TextInput;
+  const childProps = omit(["component"], props);
+  return (
+    <Context.Consumer>
+      {({ values, handleChange }) => (
+        <Input
+          {...childProps}
+          onChange={handleChange}
+          value={values[props.name]}
+        />
+      )}
+    </Context.Consumer>
+  );
 };
+
+const mapChildProps = omit(["children", "initialValues", "onSubmit"]);
 
 class Form extends React.Component {
   constructor(props) {
     super(props);
-    const values = props.mapPropsToValues(props);
     this.state = {
       errors: null,
+      handleChange: this.handleChange,
       isSubmitting: false,
-      values
+      values: props.initialValues
     };
-    this.formActions = {
+    this.formHelpers = {
       setErrors: this.setErrors,
       setSubmitting: this.setSubmitting,
       setValues: this.setValues
@@ -61,23 +73,23 @@ class Form extends React.Component {
       values: Object.assign({}, state.values, values)
     }));
 
+  handleChange = e => this.setValues({ [e.target.name]: e.target.value });
+
   handleSubmit = e => {
     e.preventDefault();
-    const values = extractFormData(e.target);
-    this.setState({ values });
-    this.props.onSubmit(values, this.formActions);
+    this.props.onSubmit(this.state.values, this.formHelpers);
   };
 
   render() {
     return (
-      <Wrapper className={this.props.className} onSubmit={this.handleSubmit}>
-        {this.props.children}
-      </Wrapper>
+      <Context.Provider value={this.state}>
+        <Wrapper {...mapChildProps(this.props)} onSubmit={this.handleSubmit}>
+          {this.props.children}
+        </Wrapper>
+      </Context.Provider>
     );
   }
 }
-
-Form.defaultProps = defaultProps;
 
 Form.Actions = Actions;
 Form.Errors = Errors;
