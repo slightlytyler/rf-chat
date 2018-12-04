@@ -13,6 +13,7 @@ const Wrapper = styled("div")`
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
 `;
 
 const Header = styled("div")`
@@ -25,13 +26,12 @@ const Header = styled("div")`
   padding: ${props => props.theme.spacing.md};
   color: ${props => props.theme.color.darkGray};
   background-color: ${props => props.theme.color.white};
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.15);
 `;
 
 const Body = styled(ScrollHandler.View)`
   flex: 1 1 auto;
   padding: ${props => props.theme.spacing.md};
-  box-shadow: inset 0px 11px 8px -10px rgba(0, 0, 0, 0.2),
-    inset 0px -8px 5px -8px rgba(0, 0, 0, 0.2);
 `;
 
 const Footer = styled("div")`
@@ -39,6 +39,7 @@ const Footer = styled("div")`
   flex-shrink: 0;
   padding: ${props => props.theme.spacing.md};
   background-color: ${props => props.theme.color.white};
+  box-shadow: 0px -3px 5px 0px rgba(0, 0, 0, 0.15);
 `;
 
 const Title = styled("div")`
