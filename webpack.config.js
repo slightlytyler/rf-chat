@@ -8,10 +8,12 @@ module.exports = (env = {}) => {
   const port = env.port || "3000";
   return {
     mode: process.env.NODE_ENV === "production" ? "production" : "development",
+    devtool: "source-map",
     entry: path.resolve(ROOT, "client/main.js"),
     output: {
+      filename: "bundle.js",
       path: path.resolve(ROOT, "client/dist"),
-      filename: "bundle.js"
+      publicPath: "/"
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -28,8 +30,10 @@ module.exports = (env = {}) => {
       ]
     },
     devServer: {
+      historyApiFallback: true,
       noInfo: false,
       port,
+      publicPath: "/",
       quiet: false,
       stats: {
         assets: false,
