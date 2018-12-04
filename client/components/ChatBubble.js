@@ -1,13 +1,23 @@
 import styled from "@emotion/styled";
-import React from "react";
 
 const ChatBubble = styled("div")`
-  width: initial;
+  width: 50%;
+
+  &:not(:first-of-type) {
+    margin-top: ${props => props.theme.spacing.md};
+  }
 `;
 
-const Sender = "div";
+const Sender = styled("div")`
+  margin-bottom: ${props => props.theme.spacing.sm};
+  color: ${props => props.theme.color.darkGray};
+`;
 
-const Text = "div";
+const Text = styled("div")`
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.md};
+  background-color: ${props => props.theme.color.white};
+  border-radius: 20px;
+`;
 
 ChatBubble.Sender = Sender;
 ChatBubble.Text = Text;

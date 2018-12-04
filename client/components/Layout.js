@@ -1,15 +1,20 @@
 import styled from "@emotion/styled";
-import React from "react";
+import Page from "./Page";
 
-const Layout = styled("div")`
-  position: fixed;
-  width: 100%;
-  height: 100%;
+const Layout = styled(Page)`
+  display: flex;
 `;
 
-const Sidebar = "div";
+const Sidebar = styled("div")`
+  width: 20rem;
+  height: 100%;
+  background-color: ${props => props.theme.color.pink};
+`;
 
-const Content = "div";
+const Content = styled("div")`
+  flex: 1 0 auto;
+  height: 100%;
+`;
 
 Layout.Sidebar = Sidebar;
 

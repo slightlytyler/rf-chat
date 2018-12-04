@@ -12,6 +12,6 @@ const FormField = props => {
   return <Input {...childProps} />;
 };
 
-FormField.defaultProps;
+FormField.defaultProps = defaultProps;
 
 export default FormField;

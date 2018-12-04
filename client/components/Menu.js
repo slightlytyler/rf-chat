@@ -1,12 +1,25 @@
 import styled from "@emotion/styled";
-import React from "react";
 
 const Menu = styled("div")`
-  width: initial;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Item = styled("div")`
-  width: initial;
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.md};
+  font-size: 1.15rem;
+  font-weight: lighter;
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  &.active {
+    cursor: default;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
 `;
 
 Menu.Item = Item;

@@ -39,6 +39,7 @@
     "@emotion/core": "^10.0.2",
     "@emotion/styled": "^10.0.2",
     "axios": "^0.18.0",
+    "emotion-theming": "^10.0.2",
     "lodash": "^4.17.11",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",

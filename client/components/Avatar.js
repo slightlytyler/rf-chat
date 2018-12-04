@@ -1,10 +1,20 @@
+import styled from "@emotion/styled";
 import React from "react";
 
-const Wrapper = "div";
+const Wrapper = styled("div")`
+  padding: ${props => props.theme.spacing.md};
+  color: ${props => props.theme.color.white};
+`;
 
-const Viewer = "div";
+const Viewer = styled("div")`
+  font-size: 1.5rem;
+  font-weight: bold;
+`;
 
-const OnlineSince = "div";
+const OnlineSince = styled("div")`
+  margin-top: 0.35rem;
+  font-weight: lighter;
+`;
 
 const Avatar = props => (
   <Wrapper>
