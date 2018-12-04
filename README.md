@@ -38,7 +38,7 @@ I didn't implement any error handling so it's easy to break the app by typing in
 
 Auth is all client side right now, too, but I don't think y'all care about that in the context of this exercise.
 
-There's also not a lot of comments so I hope it's easy to follow (I tried to make all the component semantic). I'm not a huge commentor but always leave enough meta information through types and comments for other devs to follow what I done (I think).
+There's also not a lot of comments so I hope it's easy to follow (I tried to make all the component semantic). I'm not a huge commentor but always leave enough meta information through types and comments for other devs to follow what I've done (I think).
 
 #### Reviewing the code
 
