@@ -6,25 +6,6 @@ import Query from "./Query";
 import RoomMemberList from "./RoomMemberList";
 import WaitFor from "./WaitFor";
 
-const MESSAGES = [
-  {
-    sender: { name: "Cathleen" },
-    text: "Hey whats up"
-  },
-  {
-    sender: { name: "Grover" },
-    text: "First part"
-  },
-  {
-    sender: { name: "Grover" },
-    text: "Second part"
-  },
-  {
-    sender: { name: "Tyler" },
-    text: "This is my own message"
-  }
-];
-
 const Wrapper = styled("div")`
   display: flex;
   flex-direction: column;
@@ -60,17 +41,24 @@ const Title = styled("div")`
 
 const RoomViewer = props => (
   <Query endpoint={`/rooms/${props.match.params.roomId}`}>
-    {({ data, isLoading }) => (
+    {({ data: room, isLoading: isLoadingRoom }) => (
       <WaitFor
-        condition={isLoading}
+        condition={isLoadingRoom}
         render={() => (
           <Wrapper>
             <Header>
-              <Title>{data.name}</Title>
-              <RoomMemberList members={data.users} />
+              <Title>{room.name}</Title>
+              <RoomMemberList members={room.users} />
             </Header>
             <Body>
-              <MessageList messages={MESSAGES} />
+              <Query endpoint={`/rooms/${props.match.params.roomId}/messages`}>
+                {({ data: messages, isLoading: isLoadingMessages }) => (
+                  <WaitFor
+                    condition={isLoadingMessages}
+                    render={() => <MessageList messages={messages} />}
+                  />
+                )}
+              </Query>
             </Body>
             <Footer>
               <MessageCreator />

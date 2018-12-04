@@ -9,9 +9,9 @@ const MessageList = props => (
     <List
       data={props.messages}
       renderItem={m => (
-        <ChatBubble key={m.text}>
-          <ChatBubble.Sender>{m.sender.name}</ChatBubble.Sender>
-          <ChatBubble.Text>{m.text}</ChatBubble.Text>
+        <ChatBubble key={m.id}>
+          <ChatBubble.Sender>{m.name}</ChatBubble.Sender>
+          <ChatBubble.Text>{m.message}</ChatBubble.Text>
         </ChatBubble>
       )}
     />
