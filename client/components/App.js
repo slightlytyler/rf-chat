@@ -34,11 +34,6 @@ const ROOMS = [
   }
 ];
 
-const SESSION = {
-  authenticatedAt: "2018-12-04T04:34:48.936Z",
-  viewer: { name: "Tyler Martinez" }
-};
-
 const App = () => (
   <Container>
     <Route
@@ -50,7 +45,7 @@ const App = () => (
               render={() => (
                 <Layout>
                   <Layout.Sidebar>
-                    <Avatar session={SESSION} />
+                    <Avatar />
                     <RoomList rooms={ROOMS} />
                   </Layout.Sidebar>
                   <Layout.Content>

@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
+import AuthHandler from "./AuthHandler";
+import RelativeTime from "./RelativeTime";
 
 const Wrapper = styled("div")`
   padding: ${props => props.theme.spacing.md};
@@ -16,10 +18,18 @@ const OnlineSince = styled("div")`
   font-weight: lighter;
 `;
 
-const Avatar = props => (
+const Avatar = () => (
   <Wrapper>
-    <Viewer>{props.session.viewer.name}</Viewer>
-    <OnlineSince>Online for 12 minutes</OnlineSince>
+    <AuthHandler.Consumer>
+      {({ session }) => (
+        <React.Fragment>
+          <Viewer>{session.viewer.name}</Viewer>
+          <OnlineSince>
+            Online for <RelativeTime date={session.authenticatedAt} />
+          </OnlineSince>
+        </React.Fragment>
+      )}
+    </AuthHandler.Consumer>
   </Wrapper>
 );
 
