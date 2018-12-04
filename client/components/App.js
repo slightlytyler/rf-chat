@@ -2,6 +2,7 @@ import { kebabCase } from "lodash/fp";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import AuthenticatedRoute from "./AuthenticatedRoute";
+import AuthHandler from "./AuthHandler";
 import Avatar from "./Avatar";
 import Container from "./Container";
 import Layout from "./Layout";
@@ -40,26 +41,32 @@ const SESSION = {
 
 const App = () => (
   <Container>
-    <Switch>
-      <Route path="/login" component={Login} />
-      <AuthenticatedRoute
-        render={() => (
-          <Layout>
-            <Layout.Sidebar>
-              <Avatar session={SESSION} />
-              <RoomList rooms={ROOMS} />
-            </Layout.Sidebar>
-            <Layout.Content>
-              <Switch>
-                <Route path="/login" component={Login} />
-                <Route path="/r/:roomId" component={RoomViewer} />
-                <Redirect to={`/r/${kebabCase(ROOMS[0].name)}`} />
-              </Switch>
-            </Layout.Content>
-          </Layout>
-        )}
-      />
-    </Switch>
+    <Route
+      render={({ history }) => (
+        <AuthHandler onAuthChange={() => history.push("/")}>
+          <Switch>
+            <Route path="/login" component={Login} />
+            <AuthenticatedRoute
+              render={() => (
+                <Layout>
+                  <Layout.Sidebar>
+                    <Avatar session={SESSION} />
+                    <RoomList rooms={ROOMS} />
+                  </Layout.Sidebar>
+                  <Layout.Content>
+                    <Switch>
+                      <Route path="/login" component={Login} />
+                      <Route path="/r/:roomId" component={RoomViewer} />
+                      <Redirect to={`/r/${kebabCase(ROOMS[0].name)}`} />
+                    </Switch>
+                  </Layout.Content>
+                </Layout>
+              )}
+            />
+          </Switch>
+        </AuthHandler>
+      )}
+    />
   </Container>
 );
 

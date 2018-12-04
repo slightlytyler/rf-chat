@@ -8,7 +8,7 @@ const defaultProps = {
 
 const FormField = props => {
   const Input = props.component;
-  const childProps = omit(["component", "name"], props);
+  const childProps = omit(["component"], props);
   return <Input {...childProps} />;
 };
 
