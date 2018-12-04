@@ -15,7 +15,7 @@ const MessageList = props => (
             <ChatBubble
               message={m}
               key={m.id}
-              possessive={m.name === session.viewer.name ? "ours" : "theirs"}
+              possessive={m.name === session.viewer ? "ours" : "theirs"}
             />
           )}
         />

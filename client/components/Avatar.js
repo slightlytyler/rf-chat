@@ -23,7 +23,7 @@ const Avatar = () => (
     <AuthHandler.Consumer>
       {({ session }) => (
         <React.Fragment>
-          <Viewer>{session.viewer.name}</Viewer>
+          <Viewer>{session.viewer}</Viewer>
           <OnlineSince>
             Online for <RelativeTime date={session.authenticatedAt} />
           </OnlineSince>

@@ -93,7 +93,7 @@ const RoomDetailsScene = props => (
                                       ]);
                                     return mutate({
                                       message: values.message,
-                                      name: session.viewer.name
+                                      name: session.viewer
                                     })
                                       .then(effect(optimisticUpdate))
                                       .then(effect(scrollBottom));

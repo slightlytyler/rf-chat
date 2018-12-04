@@ -1,7 +1,13 @@
+import { noop } from "lodash/fp";
 import React from "react";
 import ScrollView from "./ScrollView";
 
-const Context = React.createContext({ position: 0, actions: {} });
+const Context = React.createContext({
+  position: 0,
+  scrollBottom: noop,
+  scrollTop: noop,
+  setPosition: noop
+});
 
 const View = props => (
   <Context.Consumer>

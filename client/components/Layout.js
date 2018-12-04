@@ -19,7 +19,6 @@ const Content = styled("div")`
 `;
 
 Layout.Sidebar = Sidebar;
-
 Layout.Content = Content;
 
 export default Layout;

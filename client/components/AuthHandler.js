@@ -2,7 +2,7 @@ import { noop } from "lodash/fp";
 import React from "react";
 
 const defaultState = {
-  actions: null,
+  login: noop,
   session: null
 };
 
@@ -19,16 +19,14 @@ class AuthHandler extends React.Component {
     const previousSession =
       hydratedSession === '"null"' ? null : hydratedSession;
     this.state = {
-      actions: {
-        login: this.login
-      },
+      login: this.login,
       session: previousSession
     };
   }
 
   createSession = username => ({
     authenticatedAt: new Date().toISOString(),
-    viewer: { name: username }
+    viewer: username
   });
 
   setSession = (session, cb) => {
