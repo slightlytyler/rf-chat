@@ -7,9 +7,9 @@ Tyler Martinez <slightlytyler@gmail.com>
 Quick start guide:
 
 ```sh
-git clone git@gitlab.com:slightlytyler/doordash-chat.git
+git clone git@github.com:slightlytyler/rf-chat.git
 
-cd doordash-chat
+cd rf-chat
 
 yarn
 
