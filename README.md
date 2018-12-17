@@ -1,4 +1,4 @@
-# DoorDash Chat
+# RF Chat
 
 Tyler Martinez <slightlytyler@gmail.com>
 
